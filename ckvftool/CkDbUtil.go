@@ -15,10 +15,11 @@ const DrivierName = "clickhouse"
 var conn *sql.DB
 var ctx context.Context
 
-// InitDB
-/**
-"clickhouse://127.0.0.1:9000?dial_timeout=1s&compress=true&max_execution_time=60"
-*/
+//
+//  InitDB
+//  @Description:
+//  @param datasource "clickhouse://127.0.0.1:9000?dial_timeout=1s&compress=true&max_execution_time=60"
+//
 func InitDB(datasource string) {
 	var err error
 
@@ -91,10 +92,12 @@ func QuerySql(querySql string) []map[string]string {
 	return mapString
 }
 
-// BatchInsert
-/**
-INSERT INTO example (Col1, Col2, Col3)
-*/
+//
+//  BatchInsert
+//  @Description:
+//  @param preSql INSERT INTO example (Col1, Col2, Col3)
+//  @param rowDatas
+//
 func BatchInsert(preSql string, rowDatas *[][]interface{}) {
 	if rowDatas == nil || *rowDatas == nil || len(*rowDatas) == 0 {
 		log.Println("待入库的数据为空…………")
