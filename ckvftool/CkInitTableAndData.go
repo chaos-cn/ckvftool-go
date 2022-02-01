@@ -42,14 +42,12 @@ func InitTableAndData(datasource, database, tablename string, iNum, gNum, sNum, 
 	log.Printf("用于测试的表[%s.%s]已初始化完成，数据量为:[%d]", database, tablename, rowNum)
 }
 
-/**
-dd	用于描述数据分区，一般取当天日期
-uid	主键，不重复，用于去重和coun计数，一般可用“证件号_证件类型”
-i_type	一般的用于索引的列，用于select及放在where后面
-g_type	用于分组的列，放在group by后面，一般类型有限，尽量不超过100种，如证件类型、籍贯等
-s_type	用于求和的列，用于sum函数，类型必须是int，取值只能是0或1
-data	用于返回字段，存储除了dd、uid和i_type以外的所有内容，内容用符号|拼接
-*/
+//dd	用于描述数据分区，一般取当天日期
+//uid	主键，不重复，用于去重和coun计数，一般可用“证件号_证件类型”
+//i_type	一般的用于索引的列，用于select及放在where后面
+//g_type	用于分组的列，放在group by后面，一般类型有限，尽量不超过100种，如证件类型、籍贯等
+//s_type	用于求和的列，用于sum函数，类型必须是int，取值只能是0或1
+//data	用于返回字段，存储除了dd、uid和i_type以外的所有内容，内容用符号|拼接
 func createTableSql(database string, tableName string, iNum, gNum, sNum int) string {
 	strs := strings.Builder{}
 	strs.Grow(1000)
@@ -102,14 +100,6 @@ func perInsertTableSql(database string, tableName string, iNum, gNum, sNum int) 
 	return strs.String()
 }
 
-/**
-dd	用于描述数据分区和TTL，可以取当天日期
-uid	主键，不重复，用于去重和coun计数，一般可用“证件号_证件类型”
-i_type	一般的用于索引的列放在where后面
-g_type	用于分组的列，放在group by后面，一般类型有限，尽量不超过30钟，如证件类型、籍贯等
-s_type	用于求和的列，用于sum函数，类型必须是int，取值为0或1
-data	用于返回字段，存储除了dd、uid和i_type以外的所有内容，内容用符号拼接
-*/
 func moreDataAndBatchInsert(preInsertTableSql string, iNum, gNum, sNum int, rowNum int) {
 
 	var rowDatas [][]interface{}
