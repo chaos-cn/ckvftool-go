@@ -1,8 +1,9 @@
-package main
+package ckvftool
 
 import (
 	"crypto/md5"
 	"fmt"
+	"github.com/chaos-cn/ckvftool-go/db"
 	"log"
 	"math/rand"
 	"strconv"
@@ -18,15 +19,17 @@ func init() {
 
 func InitTableAndData(datasource, database, tablename string, iNum, gNum, sNum, rowNum int) {
 
-	InitDB(datasource)
-	defer CloseDB()
+	db.InitDB(datasource)
+	defer db.CloseDB()
+
+	db.Ping()
 
 	//删除可能存在的已有的表
-	ExceSql("DROP TABLE IF EXISTS " + database + "." + tablename)
+	db.ExceSql("DROP TABLE IF EXISTS " + database + "." + tablename)
 
 	//建表
 	createTableSql := createTableSql(database, tablename, iNum, gNum, sNum)
-	ExceSql(createTableSql)
+	db.ExceSql(createTableSql)
 	log.Println("建表完成:", createTableSql)
 
 	log.Println("正在生成模拟数据....")
@@ -111,7 +114,7 @@ func moreDataAndBatchInsert(preInsertTableSql string, iNum, gNum, sNum int, rowN
 	for i := 0; i < rowNum; i++ {
 		mergedata.Reset()
 		if i%100000 == 0 && i != 0 {
-			BatchInsert(preInsertTableSql, &rowDatas)
+			db.BatchInsert(preInsertTableSql, &rowDatas)
 			log.Printf("生成模拟数据并入库中，当前条数[%d]", i)
 			//清空切片
 			rowDatas = rowDatas[0:0]
@@ -152,7 +155,7 @@ func moreDataAndBatchInsert(preInsertTableSql string, iNum, gNum, sNum int, rowN
 	}
 
 	if len(rowDatas) > 0 {
-		BatchInsert(preInsertTableSql, &rowDatas)
+		db.BatchInsert(preInsertTableSql, &rowDatas)
 	}
 }
 

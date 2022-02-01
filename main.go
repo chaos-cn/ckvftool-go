@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/chaos-cn/ckvftool-go/ckvftool"
 	"log"
 	"os"
 	"strconv"
@@ -117,12 +118,12 @@ func main() {
 	switch step {
 	case "init":
 		//初始化表，并塞入测试数据
-		InitTableAndData(datasource, database, tablename, iNum, gNum, sNum, rowNum)
+		ckvftool.InitTableAndData(datasource, database, tablename, iNum, gNum, sNum, rowNum)
 	case "test":
-		PerformanceTest(datasource, database, tablename, iNum, gNum, sNum, ptNum)
+		ckvftool.PerformanceTest(datasource, database, tablename, iNum, gNum, sNum, ptNum)
 	case "all":
-		InitTableAndData(datasource, database, tablename, iNum, gNum, sNum, rowNum)
-		PerformanceTest(datasource, database, tablename, iNum, gNum, sNum, ptNum)
+		ckvftool.InitTableAndData(datasource, database, tablename, iNum, gNum, sNum, rowNum)
+		ckvftool.PerformanceTest(datasource, database, tablename, iNum, gNum, sNum, ptNum)
 	default:
 		log.Fatal("[step] unknown, 执行步骤可选 all/init/performance")
 	}

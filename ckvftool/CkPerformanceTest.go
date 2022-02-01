@@ -1,7 +1,8 @@
-package main
+package ckvftool
 
 import (
 	"fmt"
+	"github.com/chaos-cn/ckvftool-go/db"
 	"log"
 	"strconv"
 	"strings"
@@ -11,12 +12,10 @@ import (
 
 func PerformanceTest(datasource, database, tableName string, iNum, gNum, sNum, ptNum int) {
 
-	InitDB(datasource)
-	defer CloseDB()
+	db.InitDB(datasource)
+	defer db.CloseDB()
 
-	if err := conn.Ping(); err != nil {
-		log.Fatal(err)
-	}
+	db.Ping()
 	beginTime := time.Now()
 
 	var wgtop sync.WaitGroup
@@ -56,7 +55,7 @@ func TestDbWorker(wg *sync.WaitGroup, sql string) {
 	defer wg.Done()
 
 	//fmt.Println(sql)
-	result := QuerySql(sql)
+	result := db.QuerySql(sql)
 	log.Println("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓\n",
 		sql, "\n", result,
 		"\n↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑\n")

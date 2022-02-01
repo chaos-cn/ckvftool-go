@@ -1,4 +1,4 @@
-package main
+package db
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-const DrivierName = "clickhouse"
+const drivierName = "clickhouse"
 
 var conn *sql.DB
 var ctx context.Context
@@ -23,7 +23,7 @@ var ctx context.Context
 func InitDB(datasource string) {
 	var err error
 
-	conn, err = sql.Open(DrivierName, datasource)
+	conn, err = sql.Open(drivierName, datasource)
 
 	if err != nil {
 		log.Fatal(err)
@@ -44,6 +44,12 @@ func InitDB(datasource string) {
 		log.Fatal(err)
 	}
 	log.Println("初始化连接 ", datasource, "成功!")
+}
+
+func Ping() {
+	if err := conn.Ping(); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func ExceSql(sql string) {
