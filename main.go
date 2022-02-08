@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/chaos-cn/ckvftool-go/ckvftool"
+	ckvftool "github.com/chaos-cn/ckvftool-go/cmd"
 	"log"
 	"os"
 	"strconv"
