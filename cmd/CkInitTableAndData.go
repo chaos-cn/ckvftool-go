@@ -3,7 +3,7 @@ package ckvftool
 import (
 	"crypto/md5"
 	"fmt"
-	"github.com/chaos-cn/ckvftool-go/cmd/db"
+	"github.com/chaos-cn/ckvftool-go/internal/db"
 	"log"
 	"math/rand"
 	"strconv"

@@ -2,7 +2,7 @@ package ckvftool
 
 import (
 	"fmt"
-	"github.com/chaos-cn/ckvftool-go/cmd/db"
+	"github.com/chaos-cn/ckvftool-go/internal/db"
 	"log"
 	"strconv"
 	"strings"
